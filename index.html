@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API 테스트</title>
+</head>
+
+<body>
+    <h1>사이트</h1>
+    <input id="bookNameInput">
+    <button id="searchBtn">검색</button>
+    <p></p>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script>
+        //$(document).ready(function () {
+            $("#searchBtn").click(function() {
+                $.ajax({
+                    method: "GET",
+                    url: "https://dapi.kakao.com/v3/search/book?target=title",
+                    data: { query: $("#bookNameInput").val() },
+                    headers: { Authorization: "KakaoAK {c370c5d5d98d0ae535a2238b8dd90686}" }
+                })
+                .done(function (msg) {
+                    console.log(msg.documents[0].title);
+                    console.log(msg.documents[0].thumbnail);
+                    $( "p" ).append( "<strong>" + msg.documents[0].title + "</strong>" );
+                    $( "p" ).append( "<img src='" + msg.documents[0].thumbnail + "'/>" );
+                });
+            });
+        //});
+         
+    </script>
+</body>
+
+</html>
